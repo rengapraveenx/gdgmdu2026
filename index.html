@@ -241,6 +241,89 @@
       50%       { transform: translateX(-50%) translateY(6px); }
     }
 
+    /* ── OVERVIEW SECTION ── */
+    #overview {
+      padding: 90px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 0;
+    }
+
+    .overview-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+
+    .overview-card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .overview-card-title .oc-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .oc-learn .oc-icon  { background: rgba(66,133,244,0.15); color: var(--blue); }
+    .oc-outcome .oc-icon { background: rgba(52,168,83,0.15);  color: var(--green); }
+
+    .oc-learn  { border-top: 2px solid var(--blue); }
+    .oc-outcome { border-top: 2px solid var(--green); }
+
+    .overview-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .overview-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .overview-list li .oi-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .oc-learn  .oi-dot { background: rgba(66,133,244,0.15); color: var(--blue); }
+    .oc-outcome .oi-dot { background: rgba(52,168,83,0.15);  color: var(--green); }
+
+    .overview-list li strong { color: var(--text); }
+
+    @media (max-width: 640px) {
+      #overview { padding: 60px 16px; }
+      .overview-grid { grid-template-columns: 1fr; gap: 16px; }
+      .overview-card { padding: 24px 20px; }
+    }
+
     /* ── STEPS SECTION ── */
     #steps {
       padding: 100px 24px;
@@ -723,6 +806,7 @@
     GDG&nbsp;Madurai
   </div>
   <div style="display:flex;gap:20px">
+    <a href="#overview" class="nav-link">Overview</a>
     <a href="#steps" class="nav-link">Setup Guide</a>
     <a href="#volunteers" class="nav-link">Volunteers</a>
   </div>
@@ -768,6 +852,83 @@
   <div class="scroll-hint">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     Setup guide below
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-header">
+    <div class="section-label" style="color:var(--blue)">Session Overview</div>
+    <h2>What to Expect Today</h2>
+    <p>A hands-on workshop — you leave with a running local AI agent on your own machine.</p>
+  </div>
+
+  <div class="overview-grid">
+
+    <!-- LEARN -->
+    <div class="overview-card oc-learn">
+      <div class="overview-card-title">
+        <div class="oc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        What You'll Learn
+      </div>
+      <ul class="overview-list">
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>How to install &amp; run <strong>Ollama</strong> locally on Windows and macOS</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>How to download and serve the <strong>Gemma 3</strong> language model offline</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>Setting up a <strong>Python virtual environment</strong> and installing dependencies</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>Connecting a <strong>Streamlit frontend</strong> to a local AI model via API</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>Understanding how <strong>agentic AI</strong> works without cloud dependency</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- OUTCOME -->
+    <div class="overview-card oc-outcome">
+      <div class="overview-card-title">
+        <div class="oc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Session Outcome
+      </div>
+      <ul class="overview-list">
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>A <strong>fully working AI chat app</strong> running entirely on your laptop</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span><strong>Zero cloud cost</strong> — no API key, no subscription, no data sent out</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>Works <strong>completely offline</strong> — usable anywhere, anytime after setup</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span><strong>Your data stays on your device</strong> — full privacy by design</span>
+        </li>
+        <li>
+          <div class="oi-dot"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+          <span>Foundation to <strong>build your own local AI apps</strong> and agents</span>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </section>
 

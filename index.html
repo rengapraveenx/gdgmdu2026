@@ -512,29 +512,36 @@
     }
 
     .vol-avatar {
-      width: 72px; height: 72px;
+      width: 80px; height: 80px;
       border-radius: 50%;
-      border: 2px solid;
+      padding: 3px;
+      background: conic-gradient(#4285F4 0deg, #EA4335 90deg, #FBBC05 180deg, #34A853 270deg, #4285F4 360deg);
+      flex-shrink: 0;
+    }
+
+    .vol-avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
       font-size: 1.1rem;
       letter-spacing: 0.05em;
-      flex-shrink: 0;
-      overflow: hidden;
       position: relative;
     }
 
-    .vol-avatar img {
+    .vol-avatar-inner img {
+      position: absolute;
+      inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       border-radius: 50%;
-      position: absolute;
-      inset: 0;
+      z-index: 2;
     }
 
-    .vol-avatar .vol-initials {
+    .vol-initials {
       position: relative;
       z-index: 1;
     }
@@ -612,7 +619,8 @@
       #volunteers { padding: 72px 20px; }
       .vol-grid { gap: 12px; }
       .vol-card { width: 140px; padding: 18px 12px 16px; }
-      .vol-avatar { width: 58px; height: 58px; font-size: 0.95rem; }
+      .vol-avatar { width: 64px; height: 64px; }
+      .vol-avatar-inner { font-size: 0.95rem; }
     }
 
     /* Mobile */
@@ -937,9 +945,11 @@ cd GDG-Ollama-DEMO">Copy</button>
   <div class="vol-grid">
 
     <a href="https://www.linkedin.com/in/sharnitha-purusothaman" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(66,133,244,0.12);border-color:var(--blue);color:var(--blue)">
-        <img src="https://unavatar.io/linkedin/sharnitha-purusothaman" alt="Sharnitha Purusothaman" onerror="this.remove()">
-        <span class="vol-initials">SP</span>
+      <div class="vol-avatar">
+        <div class="vol-avatar-inner" style="background:rgba(66,133,244,0.15);color:var(--blue)">
+          <img src="https://unavatar.io/linkedin/sharnitha-purusothaman" alt="Sharnitha Purusothaman" onerror="this.remove()">
+          <span class="vol-initials">SP</span>
+        </div>
       </div>
       <div class="vol-name">Sharnitha Purusothaman</div>
       <div class="vol-link">
@@ -949,9 +959,11 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/malikchandrapandian" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(234,67,53,0.12);border-color:var(--red);color:var(--red)">
-        <img src="https://unavatar.io/linkedin/malikchandrapandian" alt="Malik Chandra Pandian" onerror="this.remove()">
-        <span class="vol-initials">MC</span>
+      <div class="vol-avatar">
+        <div class="vol-avatar-inner" style="background:rgba(234,67,53,0.15);color:var(--red)">
+          <img src="https://unavatar.io/linkedin/malikchandrapandian" alt="Malik Chandra Pandian" onerror="this.remove()">
+          <span class="vol-initials">MC</span>
+        </div>
       </div>
       <div class="vol-name">Malik Chandra Pandian</div>
       <div class="vol-link">
@@ -961,9 +973,11 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/joyceprincypv" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(251,188,5,0.12);border-color:var(--yellow);color:var(--yellow)">
-        <img src="https://unavatar.io/linkedin/joyceprincypv" alt="Joyce Princy P V" onerror="this.remove()">
-        <span class="vol-initials">JP</span>
+      <div class="vol-avatar">
+        <div class="vol-avatar-inner" style="background:rgba(251,188,5,0.15);color:var(--yellow)">
+          <img src="https://unavatar.io/linkedin/joyceprincypv" alt="Joyce Princy P V" onerror="this.remove()">
+          <span class="vol-initials">JP</span>
+        </div>
       </div>
       <div class="vol-name">Joyce Princy P V</div>
       <div class="vol-link">
@@ -973,9 +987,11 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/venket-raj-s" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(52,168,83,0.12);border-color:var(--green);color:var(--green)">
-        <img src="https://unavatar.io/linkedin/venket-raj-s" alt="Venket Raj S" onerror="this.remove()">
-        <span class="vol-initials">VR</span>
+      <div class="vol-avatar">
+        <div class="vol-avatar-inner" style="background:rgba(52,168,83,0.15);color:var(--green)">
+          <img src="https://unavatar.io/linkedin/venket-raj-s" alt="Venket Raj S" onerror="this.remove()">
+          <span class="vol-initials">VR</span>
+        </div>
       </div>
       <div class="vol-name">Venket Raj S</div>
       <div class="vol-link">
@@ -985,9 +1001,11 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/rengapraveenkumar" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(124,58,237,0.12);border-color:#a78bfa;color:#a78bfa">
-        <img src="https://unavatar.io/linkedin/rengapraveenkumar" alt="Renga Praveen Kumar" onerror="this.remove()">
-        <span class="vol-initials">RP</span>
+      <div class="vol-avatar">
+        <div class="vol-avatar-inner" style="background:rgba(124,58,237,0.15);color:#a78bfa">
+          <img src="https://unavatar.io/linkedin/rengapraveenkumar" alt="Renga Praveen Kumar" onerror="this.remove()">
+          <span class="vol-initials">RP</span>
+        </div>
       </div>
       <div class="vol-name">Renga Praveen Kumar</div>
       <div class="vol-link">

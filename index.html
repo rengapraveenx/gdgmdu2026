@@ -293,7 +293,8 @@
       content: '';
       position: absolute;
       top: 56px;
-      left: 27px;
+      left: 50%;
+      transform: translateX(-50%);
       width: 2px;
       bottom: 0;
       background: linear-gradient(to bottom, var(--border), transparent);
@@ -344,6 +345,20 @@
       font-size: 0.9rem;
       line-height: 1.65;
       margin-bottom: 14px;
+    }
+
+    .step-sublabel {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 14px 0 6px;
+    }
+
+    .callout-paths {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 0.82rem;
     }
 
     /* platform download cards */
@@ -654,7 +669,6 @@
       /* connector line re-align for smaller circle */
       .step:not(:last-child) .step-num::after {
         top: 44px;
-        left: 19px;
       }
 
       .step-body h3 { font-size: 1rem; padding-top: 8px; }
@@ -824,7 +838,7 @@
           ⚠️ Windows — check <strong>"Add python.exe to PATH"</strong> before clicking Install.
         </div>
 
-        <p style="margin-top:12px">macOS — install via Homebrew (recommended):</p>
+        <div class="step-sublabel">macOS — install via Homebrew (recommended):</div>
         <div class="code-block">
           <div class="code-header">
             <div class="code-dots-row"><span class="cd-red"></span><span class="cd-yellow"></span><span class="cd-green"></span></div>
@@ -867,10 +881,13 @@
         </div>
 
         <div class="callout callout-info" style="margin-top:14px">
-          💡 <strong>No internet at venue?</strong> Copy <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">.ollama/models/</code> folder via USB from a connected machine to the same path on the offline machine, then launch Ollama and run <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">ollama list</code> to verify.
-          <br/><br/>
-          📂 macOS path: <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">/Users/&lt;you&gt;/.ollama/models/</code><br/>
-          📂 Windows path: <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">C:\Users\&lt;you&gt;\.ollama\models\</code>
+          <div>
+            💡 <strong>No internet at venue?</strong> Copy <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">.ollama/models/</code> folder via USB to the same path on the offline machine. Launch Ollama, run <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">ollama list</code> to verify.
+            <div class="callout-paths">
+              <span>📂 macOS: <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">/Users/&lt;you&gt;/.ollama/models/</code></span>
+              <span>📂 Windows: <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">C:\Users\&lt;you&gt;\.ollama\models\</code></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDG-MDU · Offline Agentic App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #4285F4;
+      --red:    #EA4335;
+      --yellow: #FBBC05;
+      --green:  #34A853;
+      --dark:   #0d1117;
+      --dark2:  #161b22;
+      --surface:#1c2128;
+      --border: #30363d;
+      --text:   #e6edf3;
+      --muted:  #8b949e;
+      --code-bg:#0d1117;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 40px;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(48,54,61,0.6);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .gdg-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .gdg-dots span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .d-blue  { background: var(--blue); }
+    .d-red   { background: var(--red); }
+    .d-yellow{ background: var(--yellow); }
+    .d-green { background: var(--green); }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+      overflow: hidden;
+    }
+
+    #particle-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(66,133,244,0.12);
+      border: 1px solid rgba(66,133,244,0.3);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--blue);
+      margin-bottom: 28px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--blue) 0%, #7c3aed 40%, var(--red) 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--muted);
+      margin-top: 16px;
+      margin-bottom: 44px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .hero-sub strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 0 0 0 rgba(66,133,244,0.4);
+      animation: glow-pulse 3s infinite;
+    }
+
+    .btn-primary:hover {
+      background: #5a95f5;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(66,133,244,0.4);
+      animation: none;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(66,133,244,0.4); }
+      50%       { box-shadow: 0 0 0 12px rgba(66,133,244,0); }
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface);
+      border-color: var(--muted);
+      transform: translateY(-2px);
+    }
+
+    .btn svg { flex-shrink: 0; }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      animation: bounce 2s infinite;
+      z-index: 2;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── STEPS SECTION ── */
+    #steps {
+      padding: 100px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0 24px;
+      position: relative;
+    }
+
+    /* vertical connector line */
+    .step:not(:last-child) .step-num::after {
+      content: '';
+      position: absolute;
+      top: 56px;
+      left: 27px;
+      width: 2px;
+      bottom: 0;
+      background: linear-gradient(to bottom, var(--border), transparent);
+    }
+
+    .step-num {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 4px;
+    }
+
+    .step-num-inner {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+      border: 2px solid;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step:nth-child(1) .step-num-inner { border-color: var(--blue);   color: var(--blue);   background: rgba(66,133,244,0.08); }
+    .step:nth-child(2) .step-num-inner { border-color: var(--red);    color: var(--red);    background: rgba(234,67,53,0.08); }
+    .step:nth-child(3) .step-num-inner { border-color: var(--yellow); color: var(--yellow); background: rgba(251,188,5,0.08); }
+    .step:nth-child(4) .step-num-inner { border-color: var(--green);  color: var(--green);  background: rgba(52,168,83,0.08); }
+    .step:nth-child(5) .step-num-inner { border-color: var(--blue);   color: var(--blue);   background: rgba(66,133,244,0.08); }
+    .step:nth-child(6) .step-num-inner { border-color: #7c3aed;       color: #a78bfa;       background: rgba(124,58,237,0.08); }
+
+    .step-body {
+      padding-bottom: 48px;
+    }
+
+    .step-body h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      padding-top: 12px;
+    }
+
+    .step-body p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    /* platform download cards */
+    .platform-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .platform-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .platform-card:hover {
+      border-color: var(--blue);
+      background: rgba(66,133,244,0.05);
+      transform: translateY(-1px);
+    }
+
+    .platform-card .os-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .platform-card .link-arrow {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    /* code block */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .code-dots-row {
+      display: flex;
+      gap: 5px;
+    }
+
+    .code-dots-row span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+
+    .cd-red    { background: #ff5f57; }
+    .cd-yellow { background: #febc2e; }
+    .cd-green  { background: #28c840; }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+
+    pre {
+      padding: 16px 18px;
+      overflow-x: auto;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .cmd { color: #79c0ff; }
+    .flag { color: #a5d6ff; }
+    .comment { color: var(--muted); font-style: italic; }
+    .str { color: #a8ff78; }
+
+    /* info callout */
+    .callout {
+      display: flex;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+
+    .callout-info {
+      background: rgba(66,133,244,0.08);
+      border: 1px solid rgba(66,133,244,0.25);
+      color: #93c5fd;
+    }
+
+    .callout-warn {
+      background: rgba(251,188,5,0.08);
+      border: 1px solid rgba(251,188,5,0.25);
+      color: #fde68a;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer .gdg-dots { justify-content: center; margin-bottom: 10px; }
+
+    footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 12px 20px; }
+      .platform-cards { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 44px 1fr; gap: 0 16px; }
+      .step-num-inner { width: 40px; height: 40px; font-size: 0.875rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="gdg-dots">
+      <span class="d-blue"></span>
+      <span class="d-red"></span>
+      <span class="d-yellow"></span>
+      <span class="d-green"></span>
+    </div>
+    GDG&nbsp;Madurai
+  </div>
+  <a href="#steps" class="nav-link">Setup Guide</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-badge">GDG Madurai &nbsp;·&nbsp; Workshop 2025</div>
+
+    <h1>
+      <span class="gradient-text">Offline Agentic AI</span><br/>
+      on Your Machine
+    </h1>
+
+    <p class="hero-sub">
+      Run <strong>Gemma 3</strong> locally with <strong>Ollama</strong> — no cloud, no API key, full privacy.<br/>
+      Connect it to a Python frontend and build your first local AI agent.
+    </p>
+
+    <div class="btn-group">
+      <!-- Replace # with your Google Drive link -->
+      <a href="#" class="btn btn-primary" id="drive-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download Workshop Files
+      </a>
+
+      <a href="https://github.com/venketraj/GDG-Ollama-DEMO" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub Repo
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    Setup guide below
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <div class="section-header">
+    <div class="section-label">Step-by-step</div>
+    <h2>Get Running in Minutes</h2>
+    <p>Follow these steps in order — from install to first AI response.</p>
+  </div>
+
+  <div class="steps-list">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">
+        <div class="step-num-inner">1</div>
+      </div>
+      <div class="step-body">
+        <h3>Download &amp; Install Ollama</h3>
+        <p>Ollama runs large language models locally. Pick your OS:</p>
+
+        <div class="platform-cards">
+          <a href="https://ollama.com/download/windows" target="_blank" rel="noopener" class="platform-card">
+            <span class="os-icon">🪟</span>
+            <div>
+              <div>Windows</div>
+              <div style="font-size:0.75rem;color:var(--muted);font-weight:400">ollama.com/download</div>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+          <a href="https://ollama.com/download/mac" target="_blank" rel="noopener" class="platform-card">
+            <span class="os-icon">🍎</span>
+            <div>
+              <div>macOS</div>
+              <div style="font-size:0.75rem;color:var(--muted);font-weight:400">ollama.com/download</div>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+        </div>
+
+        <div class="callout callout-info">
+          💡 After install, Ollama runs silently in the background. No browser tab needed.
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">
+        <div class="step-num-inner">2</div>
+      </div>
+      <div class="step-body">
+        <h3>Install Python 3.11+</h3>
+        <p>The frontend app is a Python script. Install Python if you haven't already:</p>
+
+        <div class="platform-cards">
+          <a href="https://www.python.org/downloads/" target="_blank" rel="noopener" class="platform-card">
+            <span class="os-icon">🪟</span>
+            <div>
+              <div>Windows</div>
+              <div style="font-size:0.75rem;color:var(--muted);font-weight:400">python.org/downloads</div>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+          <a href="https://www.geeksforgeeks.org/how-to-install-python-on-mac/" target="_blank" rel="noopener" class="platform-card">
+            <span class="os-icon">🍎</span>
+            <div>
+              <div>macOS (M1–M4)</div>
+              <div style="font-size:0.75rem;color:var(--muted);font-weight:400">GeeksforGeeks guide</div>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+        </div>
+
+        <div class="callout callout-warn">
+          ⚠️ Windows users — check <strong>"Add Python to PATH"</strong> during installation.
+        </div>
+
+        <div class="code-block" style="margin-top:14px">
+          <div class="code-header">
+            <div class="code-dots-row"><span class="cd-red"></span><span class="cd-yellow"></span><span class="cd-green"></span></div>
+            <span>verify install</span>
+            <button class="copy-btn" data-copy="python --version">Copy</button>
+          </div>
+          <pre><span class="cmd">python</span> <span class="flag">--version</span>
+<span class="comment"># Expected: Python 3.11.x or higher</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">
+        <div class="step-num-inner">3</div>
+      </div>
+      <div class="step-body">
+        <h3>Pull the Gemma 3 Model</h3>
+        <p>Open a terminal (Command Prompt / Terminal) and pull the Gemma 3 model. This downloads ~3 GB once and caches it locally.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots-row"><span class="cd-red"></span><span class="cd-yellow"></span><span class="cd-green"></span></div>
+            <span>terminal</span>
+            <button class="copy-btn" data-copy="ollama pull gemma3">Copy</button>
+          </div>
+          <pre><span class="cmd">ollama</span> pull <span class="str">gemma3</span>
+<span class="comment"># Downloads model weights — takes a few minutes</span></pre>
+        </div>
+
+        <div class="callout callout-info" style="margin-top:14px">
+          💡 Test it works: <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">ollama run gemma3</code> — type a message, press Enter, then <kbd>Ctrl+D</kbd> to exit.
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-num">
+        <div class="step-num-inner">4</div>
+      </div>
+      <div class="step-body">
+        <h3>Get the App Files</h3>
+        <p>Two options — use the workshop bundle (from the drive download above) <em>or</em> clone directly from GitHub:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots-row"><span class="cd-red"></span><span class="cd-yellow"></span><span class="cd-green"></span></div>
+            <span>terminal</span>
+            <button class="copy-btn" data-copy="git clone https://github.com/venketraj/GDG-Ollama-DEMO.git
+cd GDG-Ollama-DEMO">Copy</button>
+          </div>
+          <pre><span class="cmd">git</span> clone <span class="str">https://github.com/venketraj/GDG-Ollama-DEMO.git</span>
+<span class="cmd">cd</span> GDG-Ollama-DEMO</pre>
+        </div>
+
+        <div class="callout callout-info" style="margin-top:10px">
+          📁 If you used the Drive download, just extract the ZIP and <code style="background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-family:'Roboto Mono',monospace;font-size:0.82rem">cd</code> into that folder.
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-num">
+        <div class="step-num-inner">5</div>
+      </div>
+      <div class="step-body">
+        <h3>Install Python Dependencies</h3>
+        <p>Inside the project folder, install required packages:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots-row"><span class="cd-red"></span><span class="cd-yellow"></span><span class="cd-green"></span></div>
+            <span>terminal · inside project folder</span>
+            <button class="copy-btn" data-copy="pip install -r requirements.txt">Copy</button>
+          </div>
+          <pre><span class="cmd">pip</span> install <span class="flag">-r</span> requirements.txt</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-num">
+        <div class="step-num-inner">6</div>
+      </div>
+      <div class="step-body">
+        <h3>Run the App 🚀</h3>
+        <p>Make sure Ollama is running (it starts automatically after install). Then launch the frontend:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots-row"><span class="cd-red"></span><span class="cd-yellow"></span><span class="cd-green"></span></div>
+            <span>terminal · inside project folder</span>
+            <button class="copy-btn" data-copy="python app.py">Copy</button>
+          </div>
+          <pre><span class="cmd">python</span> app.py</pre>
+        </div>
+
+        <div class="callout callout-info" style="margin-top:14px">
+          🎉 Open <strong>http://localhost:8501</strong> (or the URL shown in terminal) in your browser. Start chatting with Gemma 3 — fully offline!
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-list -->
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="gdg-dots">
+    <span class="d-blue"></span>
+    <span class="d-red"></span>
+    <span class="d-yellow"></span>
+    <span class="d-green"></span>
+  </div>
+  <p>GDG Madurai &nbsp;·&nbsp; Offline Agentic AI Workshop 2025</p>
+  <p style="margin-top:6px">
+    <a href="https://github.com/venketraj/GDG-Ollama-DEMO" target="_blank" rel="noopener">GitHub Repo</a>
+    &nbsp;·&nbsp;
+    <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>
+    &nbsp;·&nbsp;
+    <a href="https://developers.google.com/community/gdg" target="_blank" rel="noopener">GDG</a>
+  </p>
+</footer>
+
+<script>
+  /* ── PARTICLE SYSTEM ── */
+  (function () {
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#a78bfa'];
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    function makeParticle() {
+      return {
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(1.5, 4),
+        vx: rand(-0.4, 0.4),
+        vy: rand(-0.6, -0.15),
+        alpha: rand(0.3, 0.9),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: rand(0.4, 1),
+        decay: rand(0.0015, 0.003),
+      };
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: 120 }, makeParticle);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // draw connection lines between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(66,133,244,${(1 - dist / 110) * 0.12})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach((p, idx) => {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.life -= p.decay;
+
+        if (p.life <= 0 || p.y < -10 || p.x < -10 || p.x > W + 10) {
+          particles[idx] = makeParticle();
+          particles[idx].y = rand(H * 0.5, H + 20); // respawn from bottom half
+          return;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha * p.life;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); });
+    init();
+    draw();
+  })();
+
+  /* ── COPY BUTTONS ── */
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.dataset.copy;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  });
+</script>
+</body>
+</html>

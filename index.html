@@ -482,10 +482,10 @@
     }
 
     .vol-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 16px;
-      justify-items: center;
     }
 
     .vol-card {
@@ -499,7 +499,7 @@
       border-radius: 12px;
       text-decoration: none;
       color: var(--text);
-      width: 100%;
+      width: 160px;
       text-align: center;
       transition: all 0.2s;
     }
@@ -512,7 +512,7 @@
     }
 
     .vol-avatar {
-      width: 64px; height: 64px;
+      width: 72px; height: 72px;
       border-radius: 50%;
       border: 2px solid;
       display: flex;
@@ -522,6 +522,21 @@
       font-size: 1.1rem;
       letter-spacing: 0.05em;
       flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .vol-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      position: absolute;
+      inset: 0;
+    }
+
+    .vol-avatar .vol-initials {
+      position: relative;
+      z-index: 1;
     }
 
     .vol-name {
@@ -595,8 +610,9 @@
 
     @media (max-width: 768px) {
       #volunteers { padding: 72px 20px; }
-      .vol-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-      .vol-avatar { width: 52px; height: 52px; font-size: 0.95rem; }
+      .vol-grid { gap: 12px; }
+      .vol-card { width: 140px; padding: 18px 12px 16px; }
+      .vol-avatar { width: 58px; height: 58px; font-size: 0.95rem; }
     }
 
     /* Mobile */
@@ -921,7 +937,10 @@ cd GDG-Ollama-DEMO">Copy</button>
   <div class="vol-grid">
 
     <a href="https://www.linkedin.com/in/sharnitha-purusothaman" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(66,133,244,0.12);border-color:var(--blue);color:var(--blue)">SP</div>
+      <div class="vol-avatar" style="background:rgba(66,133,244,0.12);border-color:var(--blue);color:var(--blue)">
+        <img src="https://unavatar.io/linkedin/sharnitha-purusothaman" alt="Sharnitha Purusothaman" onerror="this.remove()">
+        <span class="vol-initials">SP</span>
+      </div>
       <div class="vol-name">Sharnitha Purusothaman</div>
       <div class="vol-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -930,7 +949,10 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/malikchandrapandian" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(234,67,53,0.12);border-color:var(--red);color:var(--red)">MC</div>
+      <div class="vol-avatar" style="background:rgba(234,67,53,0.12);border-color:var(--red);color:var(--red)">
+        <img src="https://unavatar.io/linkedin/malikchandrapandian" alt="Malik Chandra Pandian" onerror="this.remove()">
+        <span class="vol-initials">MC</span>
+      </div>
       <div class="vol-name">Malik Chandra Pandian</div>
       <div class="vol-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -939,7 +961,10 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/joyceprincypv" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(251,188,5,0.12);border-color:var(--yellow);color:var(--yellow)">JP</div>
+      <div class="vol-avatar" style="background:rgba(251,188,5,0.12);border-color:var(--yellow);color:var(--yellow)">
+        <img src="https://unavatar.io/linkedin/joyceprincypv" alt="Joyce Princy P V" onerror="this.remove()">
+        <span class="vol-initials">JP</span>
+      </div>
       <div class="vol-name">Joyce Princy P V</div>
       <div class="vol-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -948,7 +973,10 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/venket-raj-s" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(52,168,83,0.12);border-color:var(--green);color:var(--green)">VR</div>
+      <div class="vol-avatar" style="background:rgba(52,168,83,0.12);border-color:var(--green);color:var(--green)">
+        <img src="https://unavatar.io/linkedin/venket-raj-s" alt="Venket Raj S" onerror="this.remove()">
+        <span class="vol-initials">VR</span>
+      </div>
       <div class="vol-name">Venket Raj S</div>
       <div class="vol-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -957,7 +985,10 @@ cd GDG-Ollama-DEMO">Copy</button>
     </a>
 
     <a href="https://www.linkedin.com/in/rengapraveenkumar" target="_blank" rel="noopener" class="vol-card">
-      <div class="vol-avatar" style="background:rgba(124,58,237,0.12);border-color:#a78bfa;color:#a78bfa">RP</div>
+      <div class="vol-avatar" style="background:rgba(124,58,237,0.12);border-color:#a78bfa;color:#a78bfa">
+        <img src="https://unavatar.io/linkedin/rengapraveenkumar" alt="Renga Praveen Kumar" onerror="this.remove()">
+        <span class="vol-initials">RP</span>
+      </div>
       <div class="vol-name">Renga Praveen Kumar</div>
       <div class="vol-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
